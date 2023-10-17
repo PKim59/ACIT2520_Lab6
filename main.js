@@ -21,13 +21,8 @@ IOhandler.unzip(zipFilePath, pathUnzipped)
   .then(() => {
     return IOhandler.readDir(pathUnzipped);
   })
-  .then((theFiles) => {
-    // console.log("test");
-    theFiles.forEach((file) => {
-      const inp = path.join(pathUnzipped, file);
-      const outp = path.join(pathProcessed, file);
-      return IOhandler.grayScale(inp, outp);
-    });
+  .then((imgs) => {
+    Promise.all(imgs.map((img) => IOhandler.grayScale(pathUnzipped + "/" + img,pathProcessed + "/" + img)));
   })
   .then(() => {
     console.log("All files have been processed. Enjoy the grayscale images!");

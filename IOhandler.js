@@ -88,7 +88,10 @@ const grayScale = (pathIn, pathOut) => {
     const writeStream = fs.createWriteStream(pathOut);
     const pngStream = new PNG().on("parsed", function () {
       handleGrayscale(this);
-      this.pack().pipe(writeStream);
+      this.pack().pipe(writeStream)
+      .on("error", (err) => {
+          reject(err);
+      });
       });
     
     pipeline(
