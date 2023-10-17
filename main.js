@@ -15,10 +15,25 @@ const zipFilePath = path.join(__dirname, "myfile.zip");
 const pathUnzipped = path.join(__dirname, "unzipped");
 const pathProcessed = path.join(__dirname, "processed");
 const fs = require('fs');
-const unzipper = require('unzipper');
+const PNG = require("pngjs").PNG
 
-fs.createReadStream(zipFilePath)
-    .pipe(unzipper.Extract({ path: "./unzipped" }))
+IOhandler.unzip(zipFilePath, pathUnzipped)
+  .then(() => {
+    return IOhandler.readDir(pathUnzipped);
+  })
+  .then((theFiles) => {
+    console.log(theFiles, "will now be processed.");
+    theFiles.forEach((file) => {
+      const inputPath = path.join(pathUnzipped, file);
+      const outputPath = path.join(pathProcessed, file);
+      return IOhandler.grayScale(inputPath, outputPath);
+    });
+  })
+  .then(() => {
+    console.log("All files have been processed. Enjoy the grayscale images!");
+  })
+  .catch((err) => {
+    console.error("An error occurred:", err);
+  });
 
-
-    
+    // Do I have to have error handling after each .then? Doesn't it work like pipeline where you only need 1?
