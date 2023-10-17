@@ -23,7 +23,6 @@ const AdmZip = require("adm-zip"),
  * @return {promise}
  */
 
-// ioHandler.js
 
 const unzip = (pathIn, pathOut) => {
   return new Promise((resolve, reject) => {
@@ -111,4 +110,3 @@ module.exports = {
   readDir,
   grayScale,
 };
-

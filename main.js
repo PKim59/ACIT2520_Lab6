@@ -22,18 +22,18 @@ IOhandler.unzip(zipFilePath, pathUnzipped)
     return IOhandler.readDir(pathUnzipped);
   })
   .then((theFiles) => {
-    console.log(theFiles, "will now be processed.");
+    // console.log("test");
     theFiles.forEach((file) => {
-      const inputPath = path.join(pathUnzipped, file);
-      const outputPath = path.join(pathProcessed, file);
-      return IOhandler.grayScale(inputPath, outputPath);
+      const inp = path.join(pathUnzipped, file);
+      const outp = path.join(pathProcessed, file);
+      return IOhandler.grayScale(inp, outp);
     });
   })
   .then(() => {
     console.log("All files have been processed. Enjoy the grayscale images!");
   })
   .catch((err) => {
-    console.error("An error occurred:", err);
+    console.log(err);
   });
 
     // Do I have to have error handling after each .then? Doesn't it work like pipeline where you only need 1?
